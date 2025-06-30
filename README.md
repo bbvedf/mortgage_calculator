@@ -6,13 +6,6 @@ Una aplicación en Streamlit para calcular pagos de hipotecas.
 2. Crea un entorno virtual: `python -m venv .venv`
 3. Activa el entorno: `.venv\Scripts\activate` (Windows)
 4. Instala dependencias: `pip install -r requirements.txt`
-Básicamente, 
-    streamlit>=1.29.0
-    pandas>=2.1.0
-    numpy>=1.26.0
-    numpy-financial>=1.0.0
-    matplotlib>=3.8.0
-    xlsxwriter>=3.1.0
 5. Ejecuta la app: `streamlit run app.py`
 
 ## Uso
