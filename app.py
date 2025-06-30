@@ -2,8 +2,9 @@ import streamlit as st
 import pandas as pd
 import numpy as np
 
-st.title("Calculadora de Préstamos Hipotecarios")
-
+# Configuración de la página 
+st.title("Calculadora de Préstamos Hipotecarios") 
+ 
 # Entradas del usuario
 loan_amount = st.number_input("Monto del préstamo (€)", min_value=0.0, value=100000.0)
 interest_rate = st.number_input("Tasa de interés anual (%)", min_value=0.0, value=3.0)
@@ -20,4 +21,4 @@ def calculate_monthly_payment(loan_amount, interest_rate, loan_term):
 
 if st.button("Calcular"):
     monthly_payment = calculate_monthly_payment(loan_amount, interest_rate, loan_term)
-    st.write(f"Pago mensual: €{monthly_payment:.2f}")
+    st.subheader(f"Pago mensual: €{monthly_payment:.2f}")
