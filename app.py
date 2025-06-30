@@ -5,9 +5,6 @@ import numpy_financial as npf
 import matplotlib.pyplot as plt
 from io import BytesIO
 
-# Debug: Mensaje inicial
-st.sidebar.markdown("### 🐛 Modo Debug Activado")
-
 # Configuración
 st.set_page_config(layout="wide")
 st.title("📊 Calculadora Hipotecaria Avanzada")
@@ -61,6 +58,65 @@ if st.button("🔄 Calcular"):
     tab1, tab2 = st.tabs(["📈 Gráficos", "📋 Tabla"])
     
     with tab1:
+
+        # --- RESUMEN COMPLETO EN 3 COLUMNAS ---
+        st.divider()
+
+        cols = st.columns(3)
+
+        # Columna 1: CUOTA
+        with cols[0]:
+            total_payments = df['Pago Total'].sum()
+            st.metric(
+                label="📌 Cuota mensual",
+                value=f"€{df.iloc[0,1]:.2f}",
+                delta=f"Anual: €{df.iloc[0,1]*12:,.2f} | Global: €{total_payments:,.2f}",
+                delta_color="off",
+                help=f"""
+                • **Mensual**: Pago fijo cada mes\n
+                • **Anual**: {df.iloc[0,1]*12:,.2f}€ (12 cuotas)\n
+                • **Global**: {total_payments:,.2f}€ (total {len(df)} pagos)\n
+                • **Capital/Interés**: {df.iloc[0,3]:.2f}€ / {df.iloc[0,2]:.2f}€
+                """
+            )
+
+        # Columna 2: INTERESES
+        with cols[1]:
+            total_interest = df['Intereses'].sum()
+            avg_interest = total_interest / len(df)
+            st.metric(
+                label="💸 Intereses",
+                value=f"€{avg_interest:.2f}",
+                delta=f"Anual: €{avg_interest*12:,.2f} | Global: €{total_interest:,.2f}",
+                delta_color="off",
+                help=f"""
+                • **Mensual (avg)**: {avg_interest:.2f}€\n
+                • **Anual (avg)**: {avg_interest*12:,.2f}€\n
+                • **Global**: {total_interest:,.2f}€ ({total_interest/loan_amount*100:.1f}% del préstamo)\n
+                • **Primer mes**: {df.iloc[0,2]:.2f}€\n
+                • **Último mes**: {df.iloc[-1,2]:.2f}€
+                """
+            )
+
+        # Columna 3: CAPITAL
+        with cols[2]:
+            total_capital = df['Capital'].sum()
+            avg_capital = total_capital / len(df)
+            st.metric(
+                label="🏠 Capital",
+                value=f"€{avg_capital:.2f}",
+                delta=f"Anual: €{avg_capital*12:,.2f} | Global: €{total_capital:,.2f}",
+                delta_color="off",
+                help=f"""
+                • **Mensual (avg)**: {avg_capital:.2f}€\n
+                • **Anual (avg)**: {avg_capital*12:,.2f}€\n
+                • **Global**: {total_capital:,.2f}€ (100% del préstamo)\n
+                • **Primer mes**: {df.iloc[0,3]:.2f}€\n
+                • **Último mes**: {df.iloc[-1,3]:.2f}€
+                """
+            )
+
+
         view_option = st.radio("Visualización:", ["Por Meses"], horizontal=True)
         
         # Debug: Mostrar opción seleccionada
@@ -124,4 +180,4 @@ if st.button("🔄 Calcular"):
 
 # Mensaje final de debug
 st.sidebar.markdown("---")
-st.sidebar.write("🔧 Estado del sistema:")
+
