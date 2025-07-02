@@ -22,7 +22,7 @@ jobs:
         uses: sonarsource/sonarqube-scan-action@v2
         env:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-          SONAR_HOST_URL: https://ryzenpc.loseyourip.com
+          SONAR_HOST_URL: http://ryzenpc.loseyourip.com
         with:
           args: >
             -Dsonar.projectKey=mortgage-calculator
