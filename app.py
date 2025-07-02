@@ -125,20 +125,21 @@ if st.button("🔄 Calcular"):
         fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(15, 6))
         
         # Gráfico 1 - Evolución deuda
+        deudaRestante = "Deuda Restante"
         if view_option == "Por Años":
             try:
                 df['Año'] = (df['Mes'] - 1) // 12 + 1
                 plot_df = df.groupby('Año').last().reset_index()
                 
                 # Debug: Verificar agrupación anual
-                st.sidebar.write("📅 Datos anuales (último mes):", plot_df[['Año', 'Deuda Restante']].head())
+                st.sidebar.write("📅 Datos anuales (último mes):", plot_df[['Año', deudaRestante]].head())
                 
-                ax1.plot(plot_df['Año'], plot_df['Deuda Restante'], color='#FF6B6B')
+                ax1.plot(plot_df['Año'], plot_df[deudaRestante], color='#FF6B6B')
                 ax1.set_xlabel("Años")
             except Exception as e:
                 st.sidebar.error(f"❌ Error en gráfico anual: {str(e)}")
         else:
-            ax1.plot(df['Mes'], df['Deuda Restante'], color='#FF6B6B')
+            ax1.plot(df['Mes'], df[deudaRestante], color='#FF6B6B')
             ax1.set_xlabel("Meses")
         
         ax1.set_title("Evolución de la Deuda")
