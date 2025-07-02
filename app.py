@@ -8,6 +8,7 @@ from io import BytesIO
 # Configuración
 st.set_page_config(layout="wide")
 st.title("📊 Calculadora Hipotecaria Avanzada")
+txtDeudaRestante="Deuda Restante"
 
 # Sidebar
 with st.sidebar:
@@ -39,7 +40,7 @@ def calculate_amortization(loan_amount, annual_rate, years, extra=0):
             
         schedule.append([month, payment + extra, interest, principal, balance])
     
-    df = pd.DataFrame(schedule, columns=["Mes", "Pago Total", "Intereses", "Capital", "Deuda Restante"])
+    df = pd.DataFrame(schedule, columns=["Mes", "Pago Total", "Intereses", "Capital", txtDeudaRestante])
     
     # Debug: Verificar datos generados
     st.sidebar.write("🔍 Primeras filas de datos:", df.head(3))
@@ -125,21 +126,20 @@ if st.button("🔄 Calcular"):
         fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(15, 6))
         
         # Gráfico 1 - Evolución deuda
-        deudaRestante = "Deuda Restante"
         if view_option == "Por Años":
             try:
                 df['Año'] = (df['Mes'] - 1) // 12 + 1
                 plot_df = df.groupby('Año').last().reset_index()
                 
                 # Debug: Verificar agrupación anual
-                st.sidebar.write("📅 Datos anuales (último mes):", plot_df[['Año', deudaRestante]].head())
+                st.sidebar.write("📅 Datos anuales (último mes):", plot_df[['Año', txtDeudaRestante]].head())
                 
-                ax1.plot(plot_df['Año'], plot_df[deudaRestante], color='#FF6B6B')
+                ax1.plot(plot_df['Año'], plot_df[txtDeudaRestante], color='#FF6B6B')
                 ax1.set_xlabel("Años")
             except Exception as e:
                 st.sidebar.error(f"❌ Error en gráfico anual: {str(e)}")
         else:
-            ax1.plot(df['Mes'], df[deudaRestante], color='#FF6B6B')
+            ax1.plot(df['Mes'], df[txtDeudaRestante], color='#FF6B6B')
             ax1.set_xlabel("Meses")
         
         ax1.set_title("Evolución de la Deuda")
@@ -176,7 +176,7 @@ if st.button("🔄 Calcular"):
             "Pago Total": "€{:.2f}",
             "Intereses": "€{:.2f}",
             "Capital": "€{:.2f}",
-            "Deuda Restante": "€{:.2f}"
+            txtDeudaRestante: "€{:.2f}"
         }), height=400)
 
 # Mensaje final de debug
