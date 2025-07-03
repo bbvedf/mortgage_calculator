@@ -172,11 +172,12 @@ if st.button("🔄 Calcular"):
         st.pyplot(fig)
 
     with tab2:
+        txtFormatoEuro = "€{:.2f}"        
         st.dataframe(df.style.format({
-            "Pago Total": "€{:.2f}",
-            "Intereses": "€{:.2f}",
-            "Capital": "€{:.2f}",
-            txtDeudaRestante: "€{:.2f}"
+            "Pago Total": txtFormatoEuro,
+            "Intereses": txtFormatoEuro,
+            "Capital": txtFormatoEuro,
+            txtDeudaRestante: txtFormatoEuro"
         }), height=400)
 
 # Mensaje final de debug
