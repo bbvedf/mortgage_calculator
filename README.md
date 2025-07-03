@@ -11,6 +11,5 @@ Una aplicación en Streamlit para calcular pagos de hipotecas.
 ## Uso
 Ingresa el monto del préstamo, tasa de interés y plazo para calcular los pagos mensuales.
 
-
 ## Demo
 https://bbvedf-mortgage-calculator.streamlit.app/
