@@ -177,7 +177,7 @@ if st.button("🔄 Calcular"):
             "Pago Total": txtFormatoEuro,
             "Intereses": txtFormatoEuro,
             "Capital": txtFormatoEuro,
-            txtDeudaRestante: txtFormatoEuro"
+            txtDeudaRestante: txtFormatoEuro
         }), height=400)
 
 # Mensaje final de debug
